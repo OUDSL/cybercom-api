@@ -7,7 +7,7 @@ from api import config
 urlpatterns = patterns('',
                        #url(r'^data/$', MongoDataStore.as_view(), name='data-list'),
                        #url(r'^data/(?P<database>[^/]+)/$', MongoDataStore.as_view(), name='data-list'),
-                       url(r'^data/(?P<index>[^/]+)/(?P<doc_type>[^/]+)/$', es_search_view.as_view(),name='es-detail'),
+                       url(r'^data/(?P<index>[^/]+)/(?P<doctype>[^/]+)/$', es_search_view.as_view(),name='es-detail'),
                        #url(r'^data/(?P<database>[^/]+)/(?P<collection>[^/]+)/(?P<id>[^/]+)/$', DataStoreDetail.as_view(),
                        #    name='data-detail-id'),
 

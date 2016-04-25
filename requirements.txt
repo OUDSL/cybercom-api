@@ -32,4 +32,6 @@ simplejson==3.6.5
 six==1.7.2
 mongoengine==0.8.7
 django-rest-framework-mongoengine==2.0.2
+elasticsearch==2.3.0
 wsgiref==0.1.2
+

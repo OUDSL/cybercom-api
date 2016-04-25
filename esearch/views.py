@@ -22,7 +22,7 @@ import os
 
 from elasticsearch import Elasticsearch
 
-from esearch.elastic_search import es_get es_search
+from esearch.elastic_search import es_get, es_search
 from esearch.es_config import ES_HOST
 
 class es_search_view(APIView):
@@ -33,7 +33,8 @@ class es_search_view(APIView):
     def __init__(self):
         self.es = Elasticsearch(ES_HOST)
 
-    def get(self, request, index=None, doc_type=None, format=None):
+    def get(self, request, index=None, doctype=None, format=None):
+	
         query = request.QUERY_PARAMS.get('query', None)
         page_size = request.QUERY_PARAMS.get(api_settings.user_settings.get('PAGINATE_BY_PARAM', 'page_size'),
                                              api_settings.user_settings.get('PAGINATE_BY', 10))
@@ -42,18 +43,22 @@ class es_search_view(APIView):
         except:
             page = 1
         try:
-            page_size = int(request.QUERY_PARAMS.get('page_size', 1))
+            page_size = int(request.QUERY_PARAMS.get('page_size', page_size))
         except:
             page_size = int(api_settings.user_settings.get('PAGINATE_BY', 10))
 
-        url = request and request.build_absolute_uri() or ''
-        action = request.QUERY_PARAMS.get('action','None')
-        if action.lower()=="get":
+        #url = request and request.build_absolute_uri() or ''
+        action = request.QUERY_PARAMS.get('esaction','None')
+	print action
+        if action.lower()=="mget":
             ids = request.QUERY_PARAMS.get('ids',None)
             if ids:
-                data = es_get(self.es, index, list(ids))
+                data = es_get(self.es, index,doctype, ids.split(','))
             else:
                 data = {"ERROR":"Must provide comma separated 'ids' query param"}
         else:
-            data = es_search(self.es, index, doc_type, query=query, page=page, nPerPage=page_size) #, uri=url)
+            data = es_search(self.es, index, doctype, query=query, page=page, nPerPage=page_size) #, uri=url)
         return Response(data)
+
+#def es_get(es_client, index, doc_type, ids=[]):
+#def es_search(es_client, index, doc_type, query=None, page=1, nPerPage=10): #, uri=''):
