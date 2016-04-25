@@ -14,6 +14,10 @@ SECRET_KEY = 'l-+nq5_8go-037rjvwb4a9nn6h2otbu@1ap0v49qg(#9l=l&*)'
 # docker run -v <path to config.py>:/usr/src/app/api/config.py cybercom/api
 FORCE_SCRIPT_NAME=None
 
+#Behind reverse proxy set header to trust for https 
+#('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_PROXY_SSL_HEADER = None 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 

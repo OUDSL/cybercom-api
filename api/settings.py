@@ -32,7 +32,8 @@ DEBUG = config.DEBUG
 TEMPLATE_DEBUG = config.TEMPLATE_DEBUG
 
 ALLOWED_HOSTS = config.ALLOWED_HOSTS
-
+SECURE_PROXY_SSL_HEADER = config.SECURE_PROXY_SSL_HEADER
+#('HTTP_X_FORWARDED_PROTO', 'https')
 REST_FRAMEWORK = {
     # Use hyperlinked styles by default.
     # Only used if the `serializer_class` attribute is not set on a view.

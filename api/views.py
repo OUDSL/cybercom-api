@@ -47,15 +47,17 @@ class UserProfile(LoginRequiredMixin,APIView):
     fields = ('username', 'first_name', 'last_name', 'email')
     model = User
     def get(self,request,id=None,format=None):
+	site_info = {'protocol': request.is_secure() and 'https' or 'http'}
         data = User.objects.get(pk=self.request.user.id)
         serializer = self.serializer_class(data,context={'request':request})
         tok = Token.objects.get_or_create(user=self.request.user)
         rdata = serializer.data
         rdata['name'] = data.get_full_name() 
-        rdata['gravator_url']="http://www.gravatar.com/avatar/%s" % (md5(rdata['email'].strip(' \t\n\r')).hexdigest()) 
+        rdata['gravator_url']="%s://www.gravatar.com/avatar/%s" % (site_info['protocol'],md5(rdata['email'].strip(' \t\n\r')).hexdigest()) 
         rdata['auth-token']= str(tok[0])
         return Response(rdata)
     def post(self,request,format=None):
+	site_info = {'protocol': request.is_secure() and 'https' or 'http'}
         user = User.objects.get(pk=self.request.user.id)
         password = request.DATA.get('password', None)
         if password:
@@ -78,7 +80,7 @@ class UserProfile(LoginRequiredMixin,APIView):
             user.save()
             tok = Token.objects.get_or_create(user=self.request.user)
             data['name'] = user.get_full_name()
-            data['gravator_url']="http://www.gravatar.com/avatar/%s" % (md5(data['email'].strip(' \t\n\r')).hexdigest())
+            data['gravator_url']="%s://www.gravatar.com/avatar/%s" % (site_info['protocol'],md5(data['email'].strip(' \t\n\r')).hexdigest())
             data['auth-token']= str(tok[0])
             return Response(data)
 
