@@ -57,3 +57,6 @@ CATALOG_URI = 'mongodb://localhost:27017/'
 #*********** Data Store ************************************************
 DATA_STORE_EXCLUDE = ['admin','local','cybercom_auth','system.users','cybercom_queue','df']
 DATA_STORE_MONGO_URI = 'mongodb://localhost:27017/'
+#********** Elastic Search *********************************************
+
+ES_HOST = [{'host':'localhost'}]

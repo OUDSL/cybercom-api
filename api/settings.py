@@ -85,8 +85,8 @@ INSTALLED_APPS = (
     'rest_framework.authtoken',
     'cybercom_queue',
     'catalog',
-    'data_store'
-
+    'data_store',
+    'esearch'
 )
 
 MIDDLEWARE_CLASSES = (
